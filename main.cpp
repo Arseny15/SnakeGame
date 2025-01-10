@@ -42,7 +42,6 @@ public:
         headUpLeftTexture.loadFromFile("headUpLeft.png");
         headDownRightTexture.loadFromFile("headDownRight.png");
         headDownLeftTexture.loadFromFile("headDownLeft.png");
-
         
         bodyUpTexture.loadFromFile("bodyUp.png");
         bodyHorizTexture.loadFromFile("bodyHoriz.png");
@@ -100,8 +99,6 @@ public:
             window.display();
         }
     }
-
-
     
 private:
     sf::RenderWindow window;
@@ -139,7 +136,6 @@ private:
     sf::Texture tailLeftTexture;
     sf::Texture tailDownTexture;
     
-    
     sf::Font font;
     int score;
     int eatenFoodCount;
@@ -152,9 +148,6 @@ private:
     sf::Text restartButtonText;
     
     sf::RectangleShape frame;
-
-
-
     
     void proccessEvents() {
         sf::Event event;
@@ -191,9 +184,6 @@ private:
         }
     }
 
-
-    
-    
     void update() {
         if (isGameOver) {
             return;
@@ -222,17 +212,13 @@ private:
 
         if (newHead == food) {
             generateFood();
-            score += 10;
+            score += 10 + eatenFoodCount;
             eatenFoodCount++;
         } else {
             snake.pop_back(); // Remove tail if food not eaten
             directions.pop_back();
         }
     }
-
-
-    
-    
 
     void renderStartScreen() {
         int windowWidth = window.getSize().x;
@@ -283,8 +269,6 @@ private:
         );
         window.draw(startButtonText);
     }
-
-
 
     void renderGameOverScreen() {
         int windowWidth = window.getSize().x;
@@ -353,8 +337,7 @@ private:
         );
         window.draw(restartButtonText);
     }
-    
-    
+
     void restartGame() {
         snake.clear();
         directions.clear();
@@ -374,7 +357,6 @@ private:
         isStartScreen = false;
     }
 
-    
     void render() {
         
         window.draw(frame);
@@ -386,7 +368,6 @@ private:
                 gridOffset.y + food.y * CELL_SIZE  // Y position in pixels
             );
             window.draw(appleSprite);
-
 
         for (int i = 0; i < snake.size(); i++) {
             sf::Sprite sprite;
@@ -449,13 +430,12 @@ private:
             window.draw(sprite);
         }
 
-
         sf::Text scoreText;
         scoreText.setFont(font);
         scoreText.setString("Score: " + std::to_string(score));
         scoreText.setCharacterSize(24);
         scoreText.setFillColor(sf::Color::White);
-        scoreText.setPosition(60, 10);
+        scoreText.setPosition(90, 10);
         window.draw(scoreText);
 
         sf::Text foodCountText;
@@ -463,7 +443,7 @@ private:
         foodCountText.setString("Apples: " + std::to_string(eatenFoodCount));
         foodCountText.setCharacterSize(24);
         foodCountText.setFillColor(sf::Color::White);
-        foodCountText.setPosition(220, 10);
+        foodCountText.setPosition(250, 10);
         window.draw(foodCountText);
     }
     
@@ -478,13 +458,9 @@ private:
             };
         } while (std::find(snake.begin(), snake.end(), food) != snake.end());
 
-      
         food.x = food.x;
         food.y = food.y;
     }
-
-    
-    
 };
 
 int main() {
